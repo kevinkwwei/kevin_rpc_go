@@ -5,12 +5,27 @@ import (
 	"fmt"
 )
 
+// Handler is the handler of a method
 type Handler func(ctx context.Context)
 
 type Service interface {
 	Register(string, Handler)
 	Serve(options *ServerOptions)
 	Close()
+}
+
+// ServiceDesc is a detailed description of a service
+type ServiceDesc struct {
+	Svr         interface{}
+	ServiceName string
+	Methods     []*MethodDesc
+	HandlerType interface{}
+}
+
+// MethodDesc is a detailed description of a method
+type MethodDesc struct {
+	MethodName string
+	Handler    Handler
 }
 
 type service struct {
