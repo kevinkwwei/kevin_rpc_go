@@ -33,9 +33,9 @@ func WithClientNetwork(network string) ClientTransportOption {
 	}
 }
 
-// WithTimeout returns a ClientTransportOption which sets the value for timeout
-func WithTimeout(timeout time.Duration) ClientTransportOption {
-	return func(o *ClientTransportOptions) {
-		o.Timeout = timeout
-	}
-}
+//// WithTimeout returns a ClientTransportOption which sets the value for timeout
+//func WithTimeout(timeout time.Duration) ClientTransportOption {
+//	return func(o *ClientTransportOptions) {
+//		o.Timeout = timeout
+//	}
+//}
