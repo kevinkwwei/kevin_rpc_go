@@ -20,18 +20,18 @@ func WithServiceName(serviceName string) ClientTransportOption {
 }
 
 // WithClientTarget returns a ClientTransportOption which sets the value for target
-func WithClientTarget(target string) ClientTransportOption {
-	return func(o *ClientTransportOptions) {
-		o.Target = target
-	}
-}
+//func WithClientTarget(target string) ClientTransportOption {
+//	return func(o *ClientTransportOptions) {
+//		o.Target = target
+//	}
+//}
 
 // WithClientNetwork returns a ClientTransportOption which sets the value for network
-func WithClientNetwork(network string) ClientTransportOption {
-	return func(o *ClientTransportOptions) {
-		o.Network = network
-	}
-}
+//func WithClientNetwork(network string) ClientTransportOption {
+//	return func(o *ClientTransportOptions) {
+//		o.Network = network
+//	}
+//}
 
 // WithTimeout returns a ClientTransportOption which sets the value for timeout
 func WithTimeout(timeout time.Duration) ClientTransportOption {
