@@ -3,7 +3,23 @@ package rpc_serialization
 import (
 	"errors"
 	"github.com/golang/protobuf/proto"
+	"math"
+	"sync"
 )
+
+var bufferPool = &sync.Pool{
+	New: func() interface{} {
+		return &cachedBuffer{
+			Buffer:            proto.Buffer{},
+			lastMarshaledSize: 16,
+		}
+	},
+}
+
+type cachedBuffer struct {
+	proto.Buffer
+	lastMarshaledSize uint32
+}
 
 type ProtobufSerialization struct{}
 
@@ -30,6 +46,13 @@ func (pb_s *ProtobufSerialization) Marshal(v interface{}) ([]byte, error) {
 	bufferPool.Put(buffer)
 
 	return data, nil
+}
+
+func upperLimit(val int) uint32 {
+	if val > math.MaxInt32 {
+		return uint32(math.MaxInt32)
+	}
+	return uint32(val)
 }
 
 func (pb_s *ProtobufSerialization) UnMarshal(data []byte, v interface{}) error {

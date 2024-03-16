@@ -29,6 +29,6 @@ func (m_s *MsgpackSerialization) UnMarshal(data []byte, v interface{}) error {
 	return err
 }
 
-func NewPbSerialization() Serialization {
+func NewMsgSerialization() Serialization {
 	return &MsgpackSerialization{}
 }
