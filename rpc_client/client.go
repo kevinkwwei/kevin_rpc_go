@@ -26,6 +26,13 @@ func (dc *defaultClient) Invoke(ctx context.Context, req, resp interface{}, serv
 	for _, o := range opts {
 		o(dc.opts)
 	}
+	// 超时机制
+	if dc.opts.time_out > 0 {
+		var cancelFunc context.CancelFunc
+		ctx, cancelFunc = context.WithTimeout(ctx, dc.opts.time_out)
+		defer cancelFunc()
+
+	}
 	return nil
 }
 

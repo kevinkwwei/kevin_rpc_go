@@ -1,6 +1,9 @@
 package rpc_server
 
-import "reflect"
+import (
+	"context"
+	"reflect"
+)
 
 type Server struct {
 	opts    *ServerOptions
@@ -67,4 +70,13 @@ func (s *Server) RegisterService(service_name string, service interface{}) error
 	sd.Methods = methods
 	s.Register(sd, service)
 	return nil
+}
+
+func (s *Server) Handle(ctx context.Context) {
+	// 超时机制
+	if s.opts.time_out != 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, s.opts.time_out)
+		defer cancel()
+	}
 }
