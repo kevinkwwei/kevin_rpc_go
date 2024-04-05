@@ -1,6 +1,7 @@
 package consul
 
 import (
+	"errors"
 	"fmt"
 	"github.com/hashicorp/consul/api"
 	"kevin_rpc_go/rpc_load_balancer"

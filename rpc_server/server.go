@@ -2,13 +2,14 @@ package rpc_server
 
 import (
 	"context"
+	"kevin_rpc_go/rpc_plugin"
 	"reflect"
 )
 
 type Server struct {
 	opts    *ServerOptions
 	service Service
-
+	plugins []rpc_plugin.Plugin
 	closing bool // whether the server is closing
 }
 
@@ -21,7 +22,23 @@ func NewServer(opt ...ServerOption) *Server {
 		o(s.opts)
 	}
 	s.service = NewService(s.opts)
+
+	for pluginName, plugin := range rpc_plugin.PluginMap {
+		if !containPlugin(pluginName, s.opts.pluginNames) {
+			continue
+		}
+		s.plugins = append(s.plugins, plugin)
+	}
 	return s
+}
+
+func containPlugin(pluginName string, plugins []string) bool {
+	for _, plugin := range plugins {
+		if pluginName == plugin {
+			return true
+		}
+	}
+	return false
 }
 
 func GetServiceMethods(p reflect.Type, v reflect.Value) ([]*MethodDesc, error) {

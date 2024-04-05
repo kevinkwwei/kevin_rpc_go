@@ -1,13 +1,20 @@
 package rpc_server
 
-import "time"
+import (
+	"kevin_rpc_go/rpc_interceptor"
+	"time"
+)
 
 type ServerOptions struct {
 	address            string
 	network            string // tcp upd
 	protocol           string // proto json
 	time_out           time.Duration
-	serialization_type string //  proto megepkg
+	serialization_type string   //  proto megepkg
+	serializationType  string   // serialization type, default: proto
+	pluginNames        []string // plugin name
+	interceptors       []rpc_interceptor.ServerInterceptor
+	selectorSvrAddr    string // service discovery server addr
 }
 
 // 选项模式
